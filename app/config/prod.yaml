@@ -1,4 +1,6 @@
 database:
   mysql:
+    url: bamboo.coyo7owzmbt6.ap-northeast-1.rds.amazonaws.com
+    port: 3306
     username: root
     password: root1234

@@ -5,7 +5,6 @@ import (
 
 	"bamboo-api/app/config"
 
-	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,8 +13,11 @@ var bambooDBClient *gorm.DB
 
 func InitMysql() {
 	conf := config.GetConfig()
-	log.Debugf("123 %v", conf.GetString("database.mysql.username"))
-	dns := fmt.Sprintf("%v:%v@tcp(127.0.0.1:3306)/bamboo?charset=utf8mb4&parseTime=True&loc=Local", conf.GetString("database.mysql.username"), conf.GetString("database.mysql.password"))
+	dns := fmt.Sprintf("%v:%v@tcp(%v:%v)/bamboo?charset=utf8mb4&parseTime=True&loc=Local",
+		conf.GetString("database.mysql.username"),
+		conf.GetString("database.mysql.password"),
+		conf.GetString("database.mysql.url"),
+		conf.GetString("database.mysql.port"))
 	client, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
