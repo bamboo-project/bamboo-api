@@ -1,23 +1,28 @@
+name: AWS ECR push
+
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
-
-name: AWS ECR push
+    branches: [ master ]
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-
     steps:
     - name: Install Octopus CLI
       uses: OctopusDeploy/install-octopus-cli-action@v1.1.1
       with:
           version: latest
+
     - name: Checkout
       uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+          go-version: 1.18
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
