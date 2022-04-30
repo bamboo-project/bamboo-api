@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"bamboo-api/app/clients/database"
+	"bamboo-api/app/config"
 	"bamboo-api/app/routers"
 
 	"github.com/gin-gonic/gin"
@@ -26,6 +27,7 @@ func init() {
 func main() {
 	r := gin.Default()
 	routers.InitRouters(r)
+	config.Init("dev")
 	database.InitMysql()
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

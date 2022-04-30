@@ -1,0 +1,4 @@
+database:
+  mysql:
+    username: root
+    password: root
