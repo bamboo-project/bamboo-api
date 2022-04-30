@@ -1,12 +1,11 @@
 package main
 
 import (
+	"bamboo-api/app/routers"
 	"os"
 
 	"bamboo-api/app/clients/database"
 	"bamboo-api/app/config"
-	"bamboo-api/app/routers"
-
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -25,12 +24,13 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	routers.InitRouters(r)
 	env := "prod"
 	if os.Getenv("environment") == "prod" {
 		env = "prod"
 	}
 	config.Init(env)
 	database.InitMysql()
+
+	routers.InitRouters(r)
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

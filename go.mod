@@ -9,9 +9,6 @@ require (
 	github.com/spf13/viper v1.11.0
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gorm v1.23.5
-)
-
-require (
 	github.com/chenzhuoyu/base64x v0.0.0-20211019084208-fb5309c8db06 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect

@@ -1,10 +1,9 @@
 package database
 
 import (
-	"fmt"
-
 	"bamboo-api/app/config"
-
+	"bamboo-api/app/models"
+	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -25,7 +24,7 @@ func InitMysql() {
 	bambooDBClient = client
 
 	// Migrate the schema
-	//db.AutoMigrate(&Product{})
+	client.AutoMigrate(&models.Message{}, &models.User{})
 
 	// Create
 	//db.Create(&Product{Code: "D42", Price: 100})
