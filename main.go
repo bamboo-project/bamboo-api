@@ -26,8 +26,8 @@ func init() {
 func main() {
 	r := gin.Default()
 	routers.InitRouters(r)
-	env := "dev"
-	if os.Getenv("env") == "prod" {
+	env := "prod"
+	if os.Getenv("environment") == "prod" {
 		env = "prod"
 	}
 	config.Init(env)
