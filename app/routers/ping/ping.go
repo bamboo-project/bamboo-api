@@ -1,10 +1,12 @@
 package ping
 
 import (
+	"net/http"
+
 	"bamboo-api/app/utils"
+
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"net/http"
 )
 
 func PingHandler(c *gin.Context) {
