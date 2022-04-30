@@ -5,6 +5,7 @@ import (
 	"bamboo-api/app/dao"
 	"bamboo-api/app/routers/message"
 	"bamboo-api/app/routers/ping"
+	"bamboo-api/app/routers/twitter"
 	"bamboo-api/app/service"
 
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,7 @@ func InitRouters(e *gin.Engine) {
 	initPing(e.Group("/"))
 	createUserMessage(e.Group("/api"))
 	messageRouter(e.Group("/api"))
+	twitterRoute(e.Group("/api"))
 
 }
 
@@ -41,4 +43,11 @@ func messageRouter(r *gin.RouterGroup) {
 	r.POST("/user/message/v1", message.PostMessage)
 
 	r.GET("/user/message/v1", message.GetMessageList)
+}
+
+func twitterRoute(r *gin.RouterGroup) {
+
+	r.GET("/login/twitter/auth", twitter.LoginByTwitter)
+	r.GET("/login/twitter/auth/callback", twitter.TwitterCallback)
+
 }

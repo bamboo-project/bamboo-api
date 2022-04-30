@@ -1,11 +1,14 @@
 package main
 
 import (
-	"bamboo-api/app/routers"
 	"os"
+
+	"bamboo-api/app/routers"
 
 	"bamboo-api/app/clients/database"
 	"bamboo-api/app/config"
+
+	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -28,6 +31,8 @@ func main() {
 	if os.Getenv("environment") == "prod" {
 		env = "prod"
 	}
+	store, _ := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("redis_secret"))
+
 	config.Init(env)
 	database.InitMysql()
 
