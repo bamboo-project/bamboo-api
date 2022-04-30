@@ -1,0 +1,26 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bamboo-api
+  labels:
+    app: bamboo-api
+spec:
+  selector:
+    matchLabels:
+      app: bamboo-api
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: bamboo-api
+    spec:
+      containers:
+        - name: bamboo-api
+          image: 882778650511.dkr.ecr.ap-southeast-1.amazonaws.com/bamboo-api:latest
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          imagePullPolicy: Always
