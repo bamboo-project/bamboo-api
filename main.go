@@ -20,14 +20,17 @@ func init() {
 	log.SetOutput(os.Stdout)
 	// Only log the warning severity or above.
 	log.SetLevel(log.InfoLevel)
-
 	log.SetReportCaller(true)
 }
 
 func main() {
 	r := gin.Default()
 	routers.InitRouters(r)
-	config.Init("dev")
+	env := "dev"
+	if os.Getenv("env") == "prod" {
+		env = "prod"
+	}
+	config.Init(env)
 	database.InitMysql()
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
