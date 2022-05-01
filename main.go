@@ -36,10 +36,11 @@ func main() {
 
 	config.Init(env)
 	database.InitMysql()
-	store, _ := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("redis_secret"))
+	//store, _ := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("redis_secret"))
+	store, _ := sessions.NewRedisStore(10, "tcp", "bamboo-redis.e1juwh.ng.0001.apne1.cache.amazonaws.com:6379", "on ~* +@all", []byte("redis_secret"))
 	r.Use(sessions.Sessions("session", store))
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://aaa.bamboownft.com"},
+		AllowOrigins:     []string{"http://aaa.bamboownft.com", "https://www.bamboownft.com"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE"},
 		AllowHeaders:     []string{"Origin", "WalletId"},
 		ExposeHeaders:    []string{"Content-Length"},
