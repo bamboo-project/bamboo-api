@@ -19,10 +19,11 @@ func LoginByTwitter(c *gin.Context) {
 		return
 	}
 
-	//session := sessions.Default(c)
-	//session.Set("request_token", rt.Token)
-	//session.Set("request_token_secret", rt.Secret)
-	//session.Save()
+	session := sessions.Default(c)
+	session.Set("request_token", rt.Token)
+	session.Set("request_token_secret", rt.Secret)
+	session.Set("wallet_id", "abc")
+	session.Save()
 
 	url := oc.AuthorizationURL(rt, nil)
 
@@ -54,9 +55,10 @@ func TwitterCallback(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
+	walletId := session.Get("wallet_id")
 
 	v = session.Get("request_token_secret")
-	if v == nil {
+	if v == nil && walletId != nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
