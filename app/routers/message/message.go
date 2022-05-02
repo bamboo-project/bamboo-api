@@ -1,12 +1,13 @@
 package message
 
 import (
-	"bamboo-api/app/models"
-	"bamboo-api/app/pkg/entity/dto"
-	"bamboo-api/app/service"
 	"net/http"
 	"strconv"
 	"time"
+
+	"bamboo-api/app/models"
+	"bamboo-api/app/pkg/entity/dto"
+	"bamboo-api/app/service"
 
 	"bamboo-api/app/models/dal"
 	"bamboo-api/app/pkg/entity/po"
@@ -72,7 +73,7 @@ func PostMessage(c *gin.Context) {
 	if content == "" || fromAddress == "" || toAddress == "" {
 		c.JSON(http.StatusBadRequest, &dto.Response{
 			Code: http.StatusBadRequest,
-			Msg:  "params invalid",
+			Msg:  "params invalidÏ",
 		})
 		return
 	}

@@ -57,15 +57,17 @@ func UpdateUserInfo() {
 
 }
 
-func (u *userService) BindTwitter(walletAddress string, twitterUrl string, twitterToken string) error {
+func (u *userService) BindTwitter(walletAddress string, twitterId string, twitterUrl string, twitterToken string, twitterSecret string) error {
 	user, err := u.userDao.Get(walletAddress)
 	if nil != err || nil == user {
 		log.Errorf("[BindTwitter] get user failed, user=%v, err=%+v", user, err)
 		return errors.New("bind twitter failed")
 	}
 	user.IsTwitter = 1
+	user.TwitterId = twitterId
 	user.TwitterUrl = twitterUrl
 	user.TwitterToken = twitterToken
+	user.TwitterSecret = twitterSecret
 	err = u.userDao.Update(user)
 	return nil
 }

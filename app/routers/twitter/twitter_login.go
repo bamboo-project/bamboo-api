@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"bamboo-api/app/service"
+
 	"github.com/garyburd/go-oauth/oauth"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -11,6 +13,17 @@ import (
 )
 
 func LoginByTwitter(c *gin.Context) {
+	//walletId := c.GetHeader("walletId")
+	walletId, exists := c.GetQuery("walletId")
+	if !exists {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	userCallbackUrl, exists := c.GetQuery("callback_url")
+	if !exists {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
 	oc := NewTWClient()
 	rt, err := oc.RequestTemporaryCredentials(nil, callbackURL, nil)
 	if err != nil {
@@ -22,7 +35,8 @@ func LoginByTwitter(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Set("request_token", rt.Token)
 	session.Set("request_token_secret", rt.Secret)
-	session.Set("wallet_id", "abc")
+	session.Set("wallet_id", walletId)
+	session.Set("callback_url", userCallbackUrl)
 	session.Save()
 
 	url := oc.AuthorizationURL(rt, nil)
@@ -55,10 +69,21 @@ func TwitterCallback(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
-	walletId := session.Get("wallet_id")
+	walletId, success := session.Get("wallet_id").(string)
 
+	if !success {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+
+	userCallbackUrl, success := session.Get("callback_url").(string)
+
+	if !success {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
 	v = session.Get("request_token_secret")
-	if v == nil && walletId != nil {
+	if v == nil {
 		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
@@ -86,7 +111,11 @@ func TwitterCallback(c *gin.Context) {
 
 	// TODO use id to make user login.
 	fmt.Println(account)
+	err = service.UserService.BindTwitter(walletId, account.ID, fmt.Sprintf("https://twitter.com/%v", account.ScreenName), at.Token, at.Secret)
 
-	c.JSON(http.StatusOK, nil)
+	if nil != err {
+		log.Errorf("[TwitterCallback] call user.bindtwitter service failed. err=%+v", err)
+	}
+	c.Redirect(http.StatusMovedPermanently, userCallbackUrl)
 	return
 }

@@ -39,17 +39,13 @@ func createUserMessage(r *gin.RouterGroup) {
 }
 
 func messageRouter(r *gin.RouterGroup) {
-
 	r.POST("/user/message/v1", message.PostMessage)
-
 	r.GET("/user/message/v1", message.GetMessageList)
 }
 
 func twitterRoute(r *gin.RouterGroup) {
-
 	r.GET("/login/twitter/auth", twitter.LoginByTwitter)
 	r.GET("/login/twitter/auth/callback", twitter.TwitterCallback)
-
 }
 func userRoute(r *gin.RouterGroup) {
 	r.GET("/user", user.GetUser)

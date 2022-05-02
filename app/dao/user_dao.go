@@ -30,7 +30,10 @@ func (u *UserDao) Get(address string) (*models.User, error) {
 		log.Warnf("[UserDao] get user err, key:%+v, err:%+v", address, err)
 		return nil, err
 	}
-	return user, nil
+	if user.ID > 0 {
+		return user, nil
+	}
+	return nil, nil
 }
 
 func (u *UserDao) Update(user *models.User) error {

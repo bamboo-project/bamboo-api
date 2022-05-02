@@ -15,8 +15,10 @@ type User struct {
 	WalletType    string         `json:"wallet_type"`
 	BambooCoins   int64          `json:"bamboo_coins"`
 	AvatarUrl     string         `json:"avatar_url"`
+	TwitterId     string         `json:"twitter_id"`
 	TwitterUrl    string         `json:"twitter_url"`
 	TwitterToken  string         `json:"twitter_token"`
+	TwitterSecret string         `json:"twitter_secret"`
 	IsTwitter     uint8          `json:"is_twitter"`
 	Followers     int64          `json:"followers"`
 	Following     int64          `json:"following"`
