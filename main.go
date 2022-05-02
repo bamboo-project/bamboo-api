@@ -30,8 +30,8 @@ func init() {
 func main() {
 	r := gin.Default()
 	env := "prod"
-	if os.Getenv("environment") == "prod" {
-		env = "prod"
+	if os.Getenv("ENV") == "dev" {
+		env = "dev"
 	}
 
 	config.Init(env)

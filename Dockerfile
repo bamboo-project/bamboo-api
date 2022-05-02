@@ -5,6 +5,8 @@ WORKDIR /app
 RUN apk add git
 RUN go mod tidy
 RUN go build -o main .
+ENV ENV prod
+
 EXPOSE 8080
 
 ENTRYPOINT ["/app/main"]
