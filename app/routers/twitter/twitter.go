@@ -24,8 +24,8 @@ var (
 
 func init() {
 	//twitterKey = os.Getenv("TEST_KEY")
-	twitterKey = "6pUXNkt8gXSUxfUcOMO92YlSH"
-	twitterSecret = "dkoeyyKIzaauqPTi81TGxuLGxx6t24Cu9ySnX7a55LfEiGZddq"
+	twitterKey = "VKGVHB82KtSOoeCFX6UzOQZr4"
+	twitterSecret = "qy2efjGhhzVMgME52EcYYrh7vKYhUqRVhhUvjGswF5j3rXTLYe"
 	//twitterSecret = os.Getenv("TEST_SECRET")
 }
 
