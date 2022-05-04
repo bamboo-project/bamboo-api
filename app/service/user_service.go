@@ -1,6 +1,10 @@
 package service
 
 import (
+	"fmt"
+	"math/rand"
+	"time"
+
 	"bamboo-api/app/constans"
 	"bamboo-api/app/dao"
 	"bamboo-api/app/models"
@@ -22,10 +26,12 @@ func InitUserService(userDao *dao.UserDao) {
 	}
 }
 func (u *userService) InitUser(walletId string) error {
+	rand.Seed(time.Now().UnixNano())
+	avatarUrl := fmt.Sprintf("https://imgs.bamboownft.com/temp/avatar_%v.png", rand.Intn(15))
 	err := u.userDao.Create(&models.User{
 		WalletAddress: walletId,
 		WalletType:    constans.NeoWallet,
-		AvatarUrl:     "",
+		AvatarUrl:     avatarUrl,
 		BambooCoins:   0,
 		Followers:     0,
 		Following:     0,

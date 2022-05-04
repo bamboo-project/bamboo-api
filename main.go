@@ -36,12 +36,19 @@ func main() {
 
 	config.Init(env)
 	database.InitMysql()
-	store, err := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("redis_secret"))
-	//store, err := sessions.NewRedisStore(10, "tcp", "bamboo-redis.e1juwh.ng.0001.apne1.cache.amazonaws.com:6379", "on ~* +@all", []byte("redis_secret"))
-	if nil != err {
-		log.Errorf("session init redis stroe failed: err=%+v", err)
+	if env == "dev" {
+		store, err := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("redis_secret"))
+		if nil != err {
+			log.Errorf("session init redis stroe failed: err=%+v", err)
+		}
+		r.Use(sessions.Sessions("session", store))
+	} else {
+		store, err := sessions.NewRedisStore(10, "tcp", "bamboo-redis.e1juwh.ng.0001.apne1.cache.amazonaws.com:6379", "on ~* +@all", []byte("redis_secret"))
+		if nil != err {
+			log.Errorf("session init redis stroe failed: err=%+v", err)
+		}
+		r.Use(sessions.Sessions("session", store))
 	}
-	r.Use(sessions.Sessions("session", store))
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://aaa.bamboownft.com", "https://www.bamboownft.com"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE"},
