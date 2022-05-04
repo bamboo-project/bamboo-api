@@ -17,7 +17,7 @@ func LoginByTwitter(c *gin.Context) {
 	//walletId := c.GetHeader("walletId")
 	failedResp := &dto.Response{
 		Code: http.StatusBadRequest,
-		Msg:  "params invalidÏ",
+		Msg:  "params invalid",
 	}
 	walletId, exists := c.GetQuery("walletId")
 	if !exists {
