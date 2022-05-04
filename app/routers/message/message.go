@@ -78,7 +78,7 @@ func PostMessage(c *gin.Context) {
 	if content == "" || fromAddress == "" || toAddress == "" {
 		c.JSON(http.StatusBadRequest, &dto.Response{
 			Code: http.StatusBadRequest,
-			Msg:  "params invalidÏ",
+			Msg:  "params invalid",
 		})
 		return
 	}

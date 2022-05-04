@@ -43,7 +43,7 @@ func main() {
 		}
 		r.Use(sessions.Sessions("session", store))
 	} else {
-		store, err := sessions.NewRedisStore(10, "tcp", "vpce-05aa92d58fbe57928-45zp2ome.elasticache.ap-northeast-1.vpce.amazonaws.com:6379", "", []byte("redis_secret"))
+		store, err := sessions.NewRedisStore(10, "tcp", "bamboo-redis.e1juwh.ng.0001.apne1.cache.amazonaws.com:6379", "", []byte("redis_secret"))
 		if nil != err {
 			log.Errorf("session init redis stroe failed: err=%+v", err)
 		}
