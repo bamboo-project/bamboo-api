@@ -29,9 +29,9 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	env := "prod"
-	if os.Getenv("ENV") == "dev" {
-		env = "dev"
+	env := "dev"
+	if os.Getenv("ENV") == "prod" {
+		env = "prod"
 	}
 
 	config.Init(env)
@@ -43,7 +43,7 @@ func main() {
 		}
 		r.Use(sessions.Sessions("session", store))
 	} else {
-		store, err := sessions.NewRedisStore(10, "tcp", "bamboo-redis.e1juwh.ng.0001.apne1.cache.amazonaws.com:6379", "on ~* +@all", []byte("redis_secret"))
+		store, err := sessions.NewRedisStore(10, "tcp", "bamboo-redis.e1juwh.ng.0001.apne1.cache.amazonaws.com:6379", "", []byte("redis_secret"))
 		if nil != err {
 			log.Errorf("session init redis stroe failed: err=%+v", err)
 		}
@@ -51,7 +51,7 @@ func main() {
 	}
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://aaa.bamboownft.com", "https://www.bamboownft.com"},
-		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE"},
+		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "WalletId"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,

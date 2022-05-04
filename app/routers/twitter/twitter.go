@@ -14,7 +14,7 @@ const (
 	accessTokenURL   = "https://api.twitter.com/oauth/access_token"
 	accountURL       = "https://api.twitter.com/1.1/account/verify_credentials.json"
 
-	callbackURL = "http://api.bamboownft.com/api/login/twitter/auth/callback"
+	callbackURL = "https://api.bamboownft.com/api/login/twitter/auth/callback"
 )
 
 var (
@@ -24,8 +24,8 @@ var (
 
 func init() {
 	//twitterKey = os.Getenv("TEST_KEY")
-	twitterKey = "NoseTvtBEsq866C9faRZN0SqT"
-	twitterSecret = "0eIaPthEVT3ubFrUSNaY8WTwA2oa4PuMQ2oLeHvW1ZRMbjCmHi"
+	twitterKey = "6pUXNkt8gXSUxfUcOMO92YlSH"
+	twitterSecret = "dkoeyyKIzaauqPTi81TGxuLGxx6t24Cu9ySnX7a55LfEiGZddq"
 	//twitterSecret = os.Getenv("TEST_SECRET")
 }
 

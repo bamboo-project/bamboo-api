@@ -12,6 +12,7 @@ import (
 	"bamboo-api/app/models/dal"
 	"bamboo-api/app/pkg/entity/po"
 
+	"github.com/bytedance/sonic"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -65,11 +66,15 @@ func GetMessageList(c *gin.Context) {
 }
 
 func PostMessage(c *gin.Context) {
-	content := c.DefaultPostForm("content", "")
-	fromAddress := c.DefaultPostForm("fromAddress", "")
-	toAddress := c.DefaultPostForm("toAddress", "")
-	fromAddressAvatarURL := c.DefaultPostForm("fromAddressAvatarURL", "")
-	toAddressAvatarURL := c.DefaultPostForm("toAddressAvatarURL", "")
+	reqJsonStr, _ := c.GetRawData()
+	var reqJsonMap map[string]string
+	_ = sonic.Unmarshal(reqJsonStr, &reqJsonMap)
+
+	content := reqJsonMap["content"]
+	fromAddress := reqJsonMap["fromAddress"]
+	toAddress := reqJsonMap["toAddress"]
+	fromAddressAvatarURL := reqJsonMap["fromAddressAvatarURL"]
+	toAddressAvatarURL := reqJsonMap["toAddressAvatarURL"]
 	if content == "" || fromAddress == "" || toAddress == "" {
 		c.JSON(http.StatusBadRequest, &dto.Response{
 			Code: http.StatusBadRequest,
