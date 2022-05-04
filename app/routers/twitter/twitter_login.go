@@ -29,6 +29,9 @@ func LoginByTwitter(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, failedResp)
 		return
 	}
+	session := sessions.Default(c)
+	session.Set("test", "test")
+
 	oc := NewTWClient()
 	rt, err := oc.RequestTemporaryCredentials(nil, callbackURL, nil)
 	if err != nil {
@@ -37,7 +40,6 @@ func LoginByTwitter(c *gin.Context) {
 		return
 	}
 
-	session := sessions.Default(c)
 	session.Set("request_token", rt.Token)
 	session.Set("request_token_secret", rt.Secret)
 	session.Set("wallet_id", walletId)
