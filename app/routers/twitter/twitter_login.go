@@ -53,7 +53,7 @@ func LoginByTwitter(c *gin.Context) {
 func TwitterCallback(c *gin.Context) {
 	failedResp := &dto.Response{
 		Code: http.StatusBadRequest,
-		Msg:  "params invalidÏ",
+		Msg:  "params invalid",
 	}
 	tok := c.DefaultQuery("oauth_token", "")
 	if tok == "" {
