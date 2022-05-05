@@ -21,7 +21,6 @@ func (m *MessageService) PostNewMessage(msg *models.Message) error {
 	if msg.FromWallet == msg.ToWallet {
 		return errors.New("can't post to yourself")
 	}
-	//
 
 	return m.messageDao.Create(msg)
 }
