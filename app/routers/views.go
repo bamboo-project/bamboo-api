@@ -3,6 +3,7 @@ package routers
 import (
 	"bamboo-api/app/clients/database"
 	"bamboo-api/app/dao"
+	"bamboo-api/app/routers/gallery"
 	"bamboo-api/app/routers/message"
 	"bamboo-api/app/routers/ping"
 	"bamboo-api/app/routers/twitter"
@@ -28,6 +29,7 @@ func InitRouters(e *gin.Engine) {
 	messageRouter(e.Group("/api"))
 	twitterRoute(e.Group("/api"))
 	userRoute(e.Group("/api"))
+	galleryRoute(e.Group("/api"))
 }
 
 func initPing(r *gin.RouterGroup) {
@@ -49,4 +51,8 @@ func twitterRoute(r *gin.RouterGroup) {
 }
 func userRoute(r *gin.RouterGroup) {
 	r.GET("/user", user.GetUser)
+}
+
+func galleryRoute(r *gin.RouterGroup) {
+	r.GET("/gallery/list/v1", gallery.GetGalleryListProxy)
 }

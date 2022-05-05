@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bamboo-api/app/clients"
 	"os"
 	"time"
 
@@ -36,6 +37,8 @@ func main() {
 
 	config.Init(env)
 	database.InitMysql()
+	clients.InitCache()
+
 	if env == "dev" {
 		store, err := sessions.NewRedisStore(10, "tcp", "localhost:6379", "", []byte("redis_secret"))
 		if nil != err {
