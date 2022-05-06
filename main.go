@@ -1,9 +1,10 @@
 package main
 
 import (
-	"bamboo-api/app/clients"
 	"os"
 	"time"
+
+	"bamboo-api/app/clients"
 
 	"bamboo-api/app/routers"
 
@@ -55,14 +56,20 @@ func main() {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://aaa.bamboownft.com", "https://www.bamboownft.com"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "WalletId"},
+		AllowHeaders:     []string{"Origin", "WalletId", "Accept", "User-Agent", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		//AllowOriginFunc: func(origin string) bool {
-		//	return origin == "https://github.com"
-		//},
-		MaxAge: 12 * time.Hour,
+		AllowAllOrigins:  false,
+		AllowOriginFunc:  func(origin string) bool { return true },
+		MaxAge:           12 * time.Hour,
 	}))
+	r.Use(func(c *gin.Context) {
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	})
 	routers.InitRouters(r)
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
