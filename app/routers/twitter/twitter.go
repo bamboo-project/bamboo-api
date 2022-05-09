@@ -3,9 +3,11 @@ package twitter
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/garyburd/go-oauth/oauth"
 	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -23,10 +25,9 @@ var (
 )
 
 func init() {
-	//twitterKey = os.Getenv("TEST_KEY")
-	twitterKey = "WkrdLXGEwU889N2RZzq9mnPvv"
-	twitterSecret = "ZSez5by2l2OUYWPt0qwapajNw2XpBRIRELIPLVnhqIK28Qz3UK"
-	//twitterSecret = os.Getenv("TEST_SECRET")
+	twitterKey = os.Getenv("TWITTER_KEY")
+	twitterSecret = os.Getenv("TWITTER_SECRET")
+	log.Infof("[twitter token init]: twitterKey=%v, TWITTER_SECRET=%v", twitterKey, twitterSecret)
 }
 
 func NewTWClient() *oauth.Client {
