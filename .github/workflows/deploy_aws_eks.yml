@@ -40,13 +40,13 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-          TWITTER_KEY: $${{ secrets.TWITTER_KEY }}
-          TWITTER_SECRET: $${{ secrets.TWITTER_SECRET }}
+          TWITTER_KEY: ${{ secrets.TWITTER_KEY }}
+          TWITTER_SECRET: ${{ secrets.TWITTER_SECRET }}
           IMAGE_TAG: "latest"
 
         run: |
           # Build a docker container and push it to ECR 
-          docker build --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg TWITTER_KEY=TWITTER_KEY --build-arg TWITTER_SECRET=TWITTER_SECRET .
+          docker build --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg TWITTER_KEY=$TWITTER_KEY --build-arg TWITTER_SECRET=$TWITTER_SECRET .
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
